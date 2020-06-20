@@ -2,6 +2,7 @@ import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import numpy as np
 from tqdm.notebook import tqdm
 import torch.optim as optim
 import torchvision
@@ -9,6 +10,7 @@ from torchvision import datasets, transforms
 import torchvision.transforms.functional as TF
 from torch.utils.data import DataLoader, Dataset
 from torch.autograd import Variable, Function
+from models.backbones.resnet import get_resnet_pretrained 
 
 def bilinear_init(in_channels, out_channels, kernel_size):
     factor = (kernel_size + 1) // 2
@@ -26,7 +28,7 @@ class FCN32(nn.Module):
 
     def __init__(self, backbone_name, in_channel=512, num_classes=11):
         super(FCN32, self).__init__()
-        self.backbone = get_resenet_pretrained(model_name=backbone_name)
+        self.backbone = get_resnet_pretrained(model_name=backbone_name)
         self.cls_num = num_classes
         self.relu    = nn.ReLU(inplace=True)
         self.Conv1x1 = nn.Conv2d(in_channel, self.cls_num, kernel_size=1)
@@ -46,7 +48,7 @@ class FCN16(nn.Module):
 
     def __init__(self, backbone_name, in_channel=512, num_classes=11):
         super(FCN16, self).__init__()
-        self.backbone = get_resenet_pretrained(model_name=backbone_name)
+        self.backbone = get_resnet_pretrained(model_name=backbone_name)
         self.cls_num = num_classes
         self.relu    = nn.ReLU(inplace=True)
         self.Conv1x1 = nn.Conv2d(in_channel, self.cls_num, kernel_size=1)
@@ -74,7 +76,7 @@ class FCN8(nn.Module):
 
     def __init__(self, backbone_name, in_channel=512, num_classes=11):
         super(FCN8, self).__init__()
-        self.backbone = get_resenet_pretrained(model_name=backbone_name)
+        self.backbone = get_resnet_pretrained(model_name=backbone_name)
         self.cls_num = num_classes
         self.relu    = nn.ReLU(inplace=True)
         self.Conv1x1 = nn.Conv2d(in_channel, self.cls_num, kernel_size=1)

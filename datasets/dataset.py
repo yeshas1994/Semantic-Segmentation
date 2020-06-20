@@ -3,13 +3,13 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision
+from tqdm import tqdm
 from torchvision import datasets, transforms
 import torchvision.transforms.functional as TF
 from torch.utils.data import DataLoader, Dataset
 import numpy as np
 from PIL import Image
-
-from #TODO create utils for color/labels/mask stuff
+import utils
 
 class Cityscape(Dataset):
   '''
@@ -27,15 +27,15 @@ class Cityscape(Dataset):
     self.rgb_std= [0.229, 0.224, 0.225]
     self.rgb_cityscapes = [0.2838917598507514, 0.32513300997108185, 0.28689552631651594]
     self.rgb_std_cityscapes = [0.040622030307410795, 0.04200336505191565, 0.04646142476429996]
-
-    for image_path, label_path in (zip(self.image_paths, self.annotation_paths)):
+    print(" ===== Loading Dataloader ===== ")
+    for image_path, label_path in tqdm(zip(self.image_paths, self.annotation_paths)):
       img = Image.open(image_path)
       mask = Image.open(label_path)#.convert('L')
 
       if self.transform:
         img = self.transform(img)
       else:
-        print("====== performing default transforms for input images ======")
+        ## print("====== performing default transforms for input images ======")
         img = TF.to_tensor(TF.resize(img, size=(256, 512), interpolation=Image.BILINEAR))
         img = TF.normalize(img, self.rgb, self.rgb_std)
 
@@ -45,7 +45,7 @@ class Cityscape(Dataset):
       else:
         ## default is recommended 
         ## if required change the mask_to_label mapping
-        print("===== performing default transforms for labels =====")
+        ## print("===== performing default transforms for labels =====")
         mask = self.mask_to_label(np.array(TF.resize(mask, size=(256, 512), 
                                               interpolation=Image.NEAREST)))
 

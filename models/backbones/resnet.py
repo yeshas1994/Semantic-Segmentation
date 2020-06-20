@@ -1,5 +1,8 @@
 ## This code was modified from pytorch source code 
 ## https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py
+import torch
+import torch.nn as nn
+import logging
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152', 'resnext50_32x4d', 'resnext101_32x8d',
@@ -19,7 +22,7 @@ model_urls = {
 }
 
 def get_resnet_pretrained(model_name, pretrained=True, progress=True):
-    assert model_name in all, "Please input valid model name"
+    assert model_name in __all__, "Please input valid model name"
 
     resnet_pretrained = {
         'resnet18' : resnet18(pretrained, progress),
@@ -27,6 +30,8 @@ def get_resnet_pretrained(model_name, pretrained=True, progress=True):
         'resnet50' : resnet50(pretrained, progress)
     }
 
+    logging.info("Loading pretrained resnet model")
+  
     return resnet_pretrained[model_name]
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1):
