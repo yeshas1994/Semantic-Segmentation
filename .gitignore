@@ -2,6 +2,7 @@
 *.pyo
 *.swp
 *.swo
+*.log
 
 __pycache__/
 datasets/Cityscapes.zip
@@ -9,7 +10,6 @@ lib/
 bin/
 pytorch/
 data/
-
-*.log
-saved_models/*
+include/ 
+saved_models/
 pyvenv.cfg

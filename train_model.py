@@ -81,13 +81,13 @@ def get_datasets(dataset_root, train=True, val=True, test=False):
   if train:
     train_images_root = os.path.join(images_root, 'training')
     train_labels_root = os.path.join(annotations_root, 'training')
-    for image, label in zip(os.listdir(train_images_root), os.listdir(train_labels_root)):
+    for image, label in zip(sorted(os.listdir(train_images_root)), sorted(os.listdir(train_labels_root))):
       train_images_paths.append(os.path.join(train_images_root, image))
       train_labels_paths.append(os.path.join(train_labels_root, label))
   if val:
     val_images_root = os.path.join(images_root, 'validation')
     val_labels_root = os.path.join(annotations_root, 'validation')
-    for image, label in zip(os.listdir(val_images_root), os.listdir(val_labels_root)):
+    for image, label in zip(sorted(os.listdir(val_images_root)), sorted(os.listdir(val_labels_root))):
       val_images_paths.append(os.path.join(val_images_root, image))
       val_labels_paths.append(os.path.join(val_labels_root, label))
  
@@ -95,7 +95,7 @@ def get_datasets(dataset_root, train=True, val=True, test=False):
     train_dataset = Cityscape(train_images_paths, train_labels_paths)
   if val:
     val_dataset = Cityscape(val_images_paths, val_labels_paths)
-
+  
   return train_dataset, val_dataset
 
 def get_args():

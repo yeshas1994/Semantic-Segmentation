@@ -230,7 +230,7 @@ def _resnet(arch, block, layers, pretrained, progress, **kwargs):
     model = ResNet(block, layers, **kwargs)
     if pretrained:
         state_dict = torch.utils.model_zoo.load_url(model_urls[arch])
-        print(state_dict)
+        logging.info(state_dict)
         model.load_state_dict(state_dict)
     return model
 
