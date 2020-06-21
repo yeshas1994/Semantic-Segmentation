@@ -1,3 +1,4 @@
+# convert label to color 
 def get_label2color_dict():
   mapping_dict = {
     0: (128, 64, 128),
@@ -40,6 +41,8 @@ def get_label2color_dict():
 
   return mapping_dict
 
+# convert Cityscape labels to 
+# the ones we want to train
 def get_mapping_dict():
   map_dict = {
     0: 0,  # unlabeled
