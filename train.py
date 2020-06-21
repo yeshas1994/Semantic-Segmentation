@@ -2,7 +2,8 @@ import os
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
-from torch.utils.tensorboard import SummaryWriter
+#from torch.utils.tensorboard import SummaryWriter
+from tensorboardX import SummaryWriter
 from models import FCN
 import numpy as np
 import logging
@@ -11,6 +12,7 @@ from PIL import Image
 from datasets.dataset import Cityscape
 import matplotlib.pyplot as plt
 import utils
+
 def eval_model(model, dataloader, criterion, device, logger, tb_logger, show_figure):
   model.eval()
   running_loss = 0
@@ -63,7 +65,7 @@ def eval_model(model, dataloader, criterion, device, logger, tb_logger, show_fig
 def train_model(model, optimizer, criterion, training_dataloader, 
                 validation_dataloader, device, epochs, batch_size, 
                 lr, CHECKPOINT_PATH, model_name, logger, writer, 
-                save_epoch=5, show_figure=True):
+                save_epoch=5, show_figure=True, save_model=True):
 
   logger.info("===== START TRAINING =====")
   model.train()
@@ -217,14 +219,23 @@ def main():
     logger.info("Validation Dataset Length: {}".format(len(val_dataloader)))
   
   #if not os.path.exists(args.saveDir):
-  writer = SummaryWriter(os.path.join(args.saveDir, args.model))
-  train_model(model=model, optimizer=optimizer, criterion=criterion, 
-              training_dataloader=train_dataloader, validation_dataloader=val_dataloader, 
-              device=device, epochs=args.epochs, batch_size=args.batchsize,
-              lr=args.lr, CHECKPOINT_PATH=args.saveDir, 
-              model_name=args.model, logger=logger, 
-              writer=writer, save_epoch=True, 
-              show_figure=True)
+  writer = SummaryWriter(os.path.join(args.saveDir, args.model+'_log'))
+  train_model(model=model, 
+              optimizer=optimizer, 
+              criterion=criterion, 
+              training_dataloader=train_dataloader, 
+              validation_dataloader=val_dataloader, 
+              device=device, 
+              epochs=2, #args.epochs, 
+              batch_size=args.batchsize,
+              lr=args.lr, 
+              CHECKPOINT_PATH=args.saveDir, 
+              model_name=args.model, 
+              logger=logger, 
+              writer=writer, 
+              save_epoch=1, 
+              show_figure=True,
+              save_model=True)
 
 if __name__ == '__main__':
   main()
