@@ -166,7 +166,7 @@ def get_args():
   #parser.add_argument('-cr', '--criterion', metavar='CR', type=str, help='criterion for training', dest='criterion')
   parser.add_argument('-d', '--dataset', metavar='D', type=str, default='data/Cityscape', 
                       help='root folder of dataset', dest='dataset')
-  parser.add_argument('-s', '--saveDir', metavar='S', type=str, default='saved_models',
+  parser.add_argument('-s', '--saveDir', metavar='S', type=str, default='saved_models/',
                       help='folder to save drive', dest='saveDir')
   
   return parser.parse_args()
@@ -226,14 +226,14 @@ def main():
               training_dataloader=train_dataloader, 
               validation_dataloader=val_dataloader, 
               device=device, 
-              epochs=2, #args.epochs, 
+              epochs=args.epochs, 
               batch_size=args.batchsize,
               lr=args.lr, 
               CHECKPOINT_PATH=args.saveDir, 
               model_name=args.model, 
               logger=logger, 
               writer=writer, 
-              save_epoch=1, 
+              save_epoch=5, 
               show_figure=True,
               save_model=True)
 
