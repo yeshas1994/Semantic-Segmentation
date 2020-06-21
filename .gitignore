@@ -2,11 +2,14 @@
 *.pyo
 *.swp
 *.swo
+
 __pycache__/
 datasets/Cityscapes.zip
 lib/
 bin/
 pytorch/
 data/
+
 *.log
 saved_models/*
+pyvenv.cfg
