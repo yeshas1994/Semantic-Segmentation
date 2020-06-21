@@ -2,7 +2,9 @@
 *.pyo
 *.swp
 *.swo
+
 *.log
+*.zip
 
 __pycache__/
 datasets/Cityscapes.zip
