@@ -117,8 +117,10 @@ def get_args():
                       help='checkpoint to load model', dest='checkpoint')
   parser.add_argument('-ft', '--fine-tune', metavar='FC', action='store_true',
                       help='fine tune data')
-  parser.add_argument('-frz', '--layers-to-freeze', type=int, dest='frozenlayers'
+  parser.add_argument('-frz', '--layers-to-freeze', type=int, dest='frozenlayers',
                       help='Num layers to freeze')
+  parser.add_argument('-numc', '--num_classes', type=int, dest=num_classes,
+                      help='Number of classes to classify for. This option is for fine-tuning only')
   #parser.add_argument('-op', '--optimizer', metavar='O', type=str, help='optimizer for training', dest='optimizer')
   #parser.add_argument('-cr', '--criterion', metavar='CR', type=str, help='criterion for training', dest='criterion')
   parser.add_argument('-d', '--dataset', metavar='D', type=str, default='data/Cityscape', 
@@ -171,13 +173,8 @@ def main():
 
   if args.fine-tune:
     assert args.load, "Please specify model to be loaded to fine-tune"
-    for idx, n, c in (model.named_children()):
-        for params in c.parameters():
-            params.requires_grad = False
-    if idx == args.frozenlayers:
-        break
+    model = utils.freeze_model(args, model)
     
-
   ## Dataloaders 
   train_dataset, val_dataset = get_datasets(args.dataset, train=True)
   logger.info("Dataset Used: {}".format(args.dataset))

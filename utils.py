@@ -83,3 +83,26 @@ def get_mapping_dict():
   }
   return map_dict
 
+def freeze_model(args, model):
+    if args.model_name is 'FCN': # FCN16
+      for idx, n, c in (model.named_children()):
+          for params in c.parameters():
+              params.requires_grad = False
+        if idx == args.frozenlayers:
+            break
+      
+      if !args.num_classes: 
+        args.num_classes = 12
+
+      model.Conv1x1 = nn.Conv2d(512, args.num_classes, kernel_size=(1,1), stride=(1,1))
+      model.Conv1x1_x4 = nn.Conv2d(256, args.num_classes, kernel_size=(1,1), stride=(1,1))
+      model.bn1 = nn.BatchNorm2d(args.num_classes)
+      model.DCN2 = nn.ConvTranspose2d(args.num_classes, args.num_classes, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+      model.dbn2 = nn.BatchNorm2d(args.num_classes)
+      model.DCN16 = nn.ConvTranspose2d(args.num_classes, args.num_classes, kernel_size=(32, 32), stride=(16, 16), padding=(8, 8))
+      model.dbn16 = nn.BatchNorm2d(args.num_classes)
+
+    # TODO add mobilenet / unet transfer learning
+
+    return model
+
