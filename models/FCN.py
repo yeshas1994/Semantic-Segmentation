@@ -50,7 +50,7 @@ class FCN16(nn.Module):
     def __init__(self, backbone_name, in_channel=512, num_classes=11):
         super(FCN16, self).__init__()
         self.backbone = get_resnet_pretrained(model_name=backbone_name)
-        logging.info(self.backbone)
+        # logging.info(self.backbone)
         self.cls_num = num_classes
         self.relu    = nn.ReLU(inplace=True)
         self.Conv1x1 = nn.Conv2d(in_channel, self.cls_num, kernel_size=1)

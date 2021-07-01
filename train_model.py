@@ -115,11 +115,11 @@ def get_args():
   parser.add_argument('-l', '--load', action='store_true')
   parser.add_argument('-c', '--checkpoint', metavar='C', type=str, 
                       help='checkpoint to load model', dest='checkpoint')
-  parser.add_argument('-ft', '--fine-tune', metavar='FC', action='store_true',
+  parser.add_argument('-ft', '--fine_tune', metavar='FC', action='store_true',
                       help='fine tune data')
-  parser.add_argument('-frz', '--layers-to-freeze', type=int, dest='frozenlayers',
+  parser.add_argument('-frz', '--layers_to_freeze', type=int, dest='frozenlayers',
                       help='Num layers to freeze')
-  parser.add_argument('-numc', '--num_classes', type=int, dest=num_classes,
+  parser.add_argument('-numc', '--num_classes', type=int, dest='num_classes',
                       help='Number of classes to classify for. This option is for fine-tuning only')
   #parser.add_argument('-op', '--optimizer', metavar='O', type=str, help='optimizer for training', dest='optimizer')
   #parser.add_argument('-cr', '--criterion', metavar='CR', type=str, help='criterion for training', dest='criterion')

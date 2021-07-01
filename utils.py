@@ -88,10 +88,10 @@ def freeze_model(args, model):
       for idx, n, c in (model.named_children()):
           for params in c.parameters():
               params.requires_grad = False
-        if idx == args.frozenlayers:
-            break
+          if idx == args.frozenlayers:
+              break
       
-      if !args.num_classes: 
+      if args.num_classes == False: 
         args.num_classes = 12
 
       model.Conv1x1 = nn.Conv2d(512, args.num_classes, kernel_size=(1,1), stride=(1,1))
