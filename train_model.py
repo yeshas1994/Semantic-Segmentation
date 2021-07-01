@@ -171,7 +171,7 @@ def main():
     criterion = checkpoint['criterion']
     logger.info("Model Loaded")
 
-  if args.fine-tune:
+  if args.fine_tune:
     assert args.load, "Please specify model to be loaded to fine-tune"
     model = utils.freeze_model(args, model)
     
