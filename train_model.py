@@ -115,7 +115,7 @@ def get_args():
   parser.add_argument('-l', '--load', action='store_true')
   parser.add_argument('-c', '--checkpoint', metavar='C', type=str, 
                       help='checkpoint to load model', dest='checkpoint')
-  parser.add_argument('-ft', '--fine_tune', metavar='FC', action='store_true',
+  parser.add_argument('-ft', '--fine_tune', action='store_true',
                       help='fine tune data')
   parser.add_argument('-frz', '--layers_to_freeze', type=int, dest='frozenlayers',
                       help='Num layers to freeze')
